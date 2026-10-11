@@ -37,6 +37,13 @@ fi
 
 cd "$(dirname "$0")"
 
+# The animated wordmark. Optional by design: a missing banner.sh must never
+# stop an install.
+if [ -f banner.sh ]; then
+  . ./banner.sh
+  banner_show
+fi
+
 # Run a command as root: directly when we are root, otherwise via sudo.
 as_root() {
   if [ "$(id -u)" -eq 0 ]; then "$@"
