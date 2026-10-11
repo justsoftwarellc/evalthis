@@ -10,7 +10,7 @@ use std::path::PathBuf;
 
 /// Scaffold an opinionated, model-agnostic eval framework into a Node.js project.
 ///
-/// You define models, tasks and graders. evalme generates the structure, a small
+/// You define models, tasks and graders. evalthis generates the structure, a small
 /// readable runner, and a rubric for running evaluations. Everything it writes is a
 /// plain file you own and can edit.
 #[derive(Parser)]

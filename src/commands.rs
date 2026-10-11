@@ -39,7 +39,7 @@ pub fn init(root: &Path, dir: &str, skip_package_json: bool, writer: Writer) -> 
         println!("\n{skipped} file(s) already existed and were left alone.");
     }
     if !writer.dry_run {
-        println!("\nNext:\n  {run_cmd}\n  evalme rubric        # how to run and read evals\n  evalme add model <name>");
+        println!("\nNext:\n  {run_cmd}\n  evalthis rubric        # how to run and read evals\n  evalthis add model <name>");
     }
     Ok(())
 }
@@ -67,7 +67,7 @@ pub fn add_grader(evals: &Path, kind: GraderKind, name: &str, writer: Writer) ->
 fn add(evals: &Path, subdir: &str, name: &str, template: &str, writer: Writer, hint: &str) -> Result<()> {
     validate_name(name)?;
     if !evals.join("eval.config.js").exists() {
-        bail!("{} has no eval.config.js; run `evalme init` first (or pass --dir)", evals.display());
+        bail!("{} has no eval.config.js; run `evalthis init` first (or pass --dir)", evals.display());
     }
     let file = evals.join(subdir).join(format!("{name}.js"));
     let outcome = writer.write(&file, &render(template, &[("name", name)]))?;

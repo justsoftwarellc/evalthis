@@ -17,21 +17,21 @@ import * as tokenCost from './graders/cost/token-cost.js';
 import * as final from './graders/final.js';
 
 export default {
-  // WHO is being evaluated. `evalme add model <name>`
+  // WHO is being evaluated. `evalthis add model <name>`
   models: [stub],
 
-  // WHAT they are asked to do. `evalme add task <name>`
+  // WHAT they are asked to do. `evalthis add task <name>`
   tasks: [uppercase],
 
   // WHO runs each session: an LLM (or script) that prompts the model under test,
-  // follows up, and summarises. `evalme add orchestrator <name>`
+  // follows up, and summarises. `evalthis add orchestrator <name>`
   orchestrator: scripted,
 
   // HOW each answer is judged. Two independent lists, so quality can never be
   // bought with cost, or the reverse, without the final grader saying so.
   graders: {
-    quality: [exactMatch], // `evalme add grader quality <name>`
-    cost: [tokenCost], //     `evalme add grader cost <name>`
+    quality: [exactMatch], // `evalthis add grader quality <name>`
+    cost: [tokenCost], //     `evalthis add grader cost <name>`
   },
 
   // The only grader allowed to produce a pass/fail. It sees the grades above.

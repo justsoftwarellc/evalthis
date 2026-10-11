@@ -4,7 +4,7 @@
 //
 // This one is a deterministic script, not an LLM, so evals run offline. It sends the
 // case input once, then finishes. For real work, swap in an LLM
-// (`evalme add orchestrator <name>`) when a task needs follow-ups, multi-turn
+// (`evalthis add orchestrator <name>`) when a task needs follow-ups, multi-turn
 // conversations or adaptive prompting.
 
 /** @type {import('../contracts.js').Model} */

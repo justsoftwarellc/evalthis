@@ -30,11 +30,11 @@ grader run offline; replace them with real ones.
 ## Next steps
 
 ```sh
-evalme add model my-model              # then fill in model + harness
-evalme add orchestrator my-orchestrator
-evalme add task my-task                # then list cases
-evalme add grader quality my-grader
-evalme add grader cost my-grader
+evalthis add model my-model              # then fill in model + harness
+evalthis add orchestrator my-orchestrator
+evalthis add task my-task                # then list cases
+evalthis add grader quality my-grader
+evalthis add grader cost my-grader
 ```
 
 Each command prints the import and where to register it in `eval.config.js`.

@@ -1,5 +1,5 @@
 [package]
-name = "evalme"
+name = "evalthis"
 version = "0.1.0"
 edition = "2021"
 description = "Scaffold an opinionated, model-agnostic eval framework into a Node.js project"
