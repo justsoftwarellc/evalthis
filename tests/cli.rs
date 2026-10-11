@@ -2,8 +2,8 @@ use std::fs;
 use std::path::Path;
 use std::process::{Command, Output};
 
-fn evalme(cwd: &Path, args: &[&str]) -> Output {
-    Command::new(env!("CARGO_BIN_EXE_evalme")).args(args).current_dir(cwd).output().unwrap()
+fn evalthis(cwd: &Path, args: &[&str]) -> Output {
+    Command::new(env!("CARGO_BIN_EXE_evalthis")).args(args).current_dir(cwd).output().unwrap()
 }
 
 fn ok(out: &Output) -> String {
@@ -20,7 +20,7 @@ fn init_creates_framework_and_is_idempotent() {
     let dir = tempfile::tempdir().unwrap();
     fs::write(dir.path().join("package.json"), "{\n  \"name\": \"app\",\n  \"scripts\": { \"test\": \"jest\" }\n}\n").unwrap();
 
-    ok(&evalme(dir.path(), &["init"]));
+    ok(&evalthis(dir.path(), &["init"]));
     for f in ["eval.config.js", "RUBRIC.md", "runner/run.js", "graders/final.js", "graders/quality/exact-match.js", "graders/cost/token-cost.js", "package.json"] {
         assert!(dir.path().join("evals").join(f).exists(), "missing {f}");
     }
@@ -31,25 +31,25 @@ fn init_creates_framework_and_is_idempotent() {
 
     // Second run must not clobber user edits.
     fs::write(dir.path().join("evals/eval.config.js"), "// mine").unwrap();
-    let out = ok(&evalme(dir.path(), &["init"]));
+    let out = ok(&evalthis(dir.path(), &["init"]));
     assert!(out.contains("skip"));
     assert_eq!(fs::read_to_string(dir.path().join("evals/eval.config.js")).unwrap(), "// mine");
 
-    ok(&evalme(dir.path(), &["init", "--force"]));
+    ok(&evalthis(dir.path(), &["init", "--force"]));
     assert_ne!(fs::read_to_string(dir.path().join("evals/eval.config.js")).unwrap(), "// mine");
 }
 
 #[test]
 fn dry_run_writes_nothing() {
     let dir = tempfile::tempdir().unwrap();
-    ok(&evalme(dir.path(), &["init", "--dry-run"]));
+    ok(&evalthis(dir.path(), &["init", "--dry-run"]));
     assert!(!dir.path().join("evals").exists());
 }
 
 #[test]
 fn custom_dir_and_no_package_json() {
     let dir = tempfile::tempdir().unwrap();
-    let out = ok(&evalme(dir.path(), &["init", "--dir", "qa/evals"]));
+    let out = ok(&evalthis(dir.path(), &["init", "--dir", "qa/evals"]));
     assert!(dir.path().join("qa/evals/eval.config.js").exists());
     assert!(out.contains("node qa/evals/runner/run.js"));
 }
@@ -57,24 +57,24 @@ fn custom_dir_and_no_package_json() {
 #[test]
 fn add_requires_init_and_validates_names() {
     let dir = tempfile::tempdir().unwrap();
-    assert!(!evalme(dir.path(), &["add", "model", "foo"]).status.success());
+    assert!(!evalthis(dir.path(), &["add", "model", "foo"]).status.success());
 
-    ok(&evalme(dir.path(), &["init"]));
-    let out = ok(&evalme(dir.path(), &["add", "model", "my-model"]));
+    ok(&evalthis(dir.path(), &["init"]));
+    let out = ok(&evalthis(dir.path(), &["add", "model", "my-model"]));
     assert!(out.contains("import * as myModel from './models/my-model.js'"));
-    ok(&evalme(dir.path(), &["add", "task", "summarize"]));
-    ok(&evalme(dir.path(), &["add", "grader", "quality", "tone"]));
-    ok(&evalme(dir.path(), &["add", "grader", "cost", "latency"]));
+    ok(&evalthis(dir.path(), &["add", "task", "summarize"]));
+    ok(&evalthis(dir.path(), &["add", "grader", "quality", "tone"]));
+    ok(&evalthis(dir.path(), &["add", "grader", "cost", "latency"]));
     for f in ["models/my-model.js", "tasks/summarize.js", "graders/quality/tone.js", "graders/cost/latency.js"] {
         assert!(dir.path().join("evals").join(f).exists(), "missing {f}");
     }
-    assert!(!evalme(dir.path(), &["add", "model", "../evil"]).status.success());
+    assert!(!evalthis(dir.path(), &["add", "model", "../evil"]).status.success());
 }
 
 #[test]
 fn rubric_prints() {
     let dir = tempfile::tempdir().unwrap();
-    let out = ok(&evalme(dir.path(), &["rubric"]));
+    let out = ok(&evalthis(dir.path(), &["rubric"]));
     assert!(out.contains("Quality graders") && out.contains("node evals/runner/run.js"));
 }
 
@@ -94,7 +94,7 @@ fn default_run_produces_verbose_results() {
         return;
     }
     let dir = tempfile::tempdir().unwrap();
-    ok(&evalme(dir.path(), &["init"]));
+    ok(&evalthis(dir.path(), &["init"]));
     let run = node(dir.path(), &["evals/runner/run.js", "-v"]);
     let stdout = String::from_utf8_lossy(&run.stdout);
     assert!(run.status.success(), "{stdout}\n{}", String::from_utf8_lossy(&run.stderr));
@@ -125,8 +125,8 @@ fn unimplemented_scaffold_fails_loudly() {
         return;
     }
     let dir = tempfile::tempdir().unwrap();
-    ok(&evalme(dir.path(), &["init"]));
-    ok(&evalme(dir.path(), &["add", "model", "todo"]));
+    ok(&evalthis(dir.path(), &["init"]));
+    ok(&evalthis(dir.path(), &["add", "model", "todo"]));
     let cfg = dir.path().join("evals/eval.config.js");
     let text = fs::read_to_string(&cfg).unwrap().replace("models: [stub]", "models: [todo]").replace("import * as stub", "import * as todo from './models/todo.js';\nimport * as stub");
     fs::write(&cfg, text).unwrap();
@@ -144,7 +144,7 @@ fn tools_and_llm_graders_are_tracked() {
         return;
     }
     let dir = tempfile::tempdir().unwrap();
-    ok(&evalme(dir.path(), &["init"]));
+    ok(&evalthis(dir.path(), &["init"]));
     let evals = dir.path().join("evals");
 
     // A model that must call a task tool before answering, reporting reasoning/cached tokens.

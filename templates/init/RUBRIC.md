@@ -125,7 +125,7 @@ for quality *and* cost (a cheap run scores high on cost). That keeps the final g
 
 | I want to... | Do this |
 | --- | --- |
-| Add a model, task, orchestrator or grader | `evalme add model\|task\|orchestrator\|grader ...`, then import it in `eval.config.js` |
+| Add a model, task, orchestrator or grader | `evalthis add model\|task\|orchestrator\|grader ...`, then import it in `eval.config.js` |
 | Use a different SDK or gateway | Change the `harness` in the model file |
 | Share one harness between models | Export it from a shared file and re-export it as `harness` |
 | Change pricing | `model.pricing`, or return `costUsd` from the harness |

@@ -14,7 +14,7 @@ macro_rules! init {
     };
 }
 
-/// Files written by `evalme init`.
+/// Files written by `evalthis init`.
 pub const INIT: &[Template] = init![
     "README.md" <= "README.md",
     "RUBRIC.md" <= "RUBRIC.md",

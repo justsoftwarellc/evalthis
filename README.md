@@ -1,16 +1,16 @@
-# evalme
+# evalthis
 
 A Rust CLI that scaffolds an opinionated, model-agnostic eval framework into a Node.js project.
-You define models, tasks, an orchestrator and graders; evalme generates the structure, a small
+You define models, tasks, an orchestrator and graders; evalthis generates the structure, a small
 readable runner (plain Node, no dependencies) and a rubric. Everything it writes is a plain file you own.
 
 ```sh
 cargo install --path .
 cd my-node-project
-evalme init                      # creates ./evals, adds an `eval` npm script
+evalthis init                      # creates ./evals, adds an `eval` npm script
 node evals/runner/run.js          # runs offline with the placeholder model
-evalme add model my-model        # also: task, orchestrator, grader quality|cost
-evalme rubric                    # how to run, grade and read evals
+evalthis add model my-model        # also: task, orchestrator, grader quality|cost
+evalthis rubric                    # how to run, grade and read evals
 ```
 
 `init` and `add` never overwrite existing files unless `--force`; `--dry-run` shows what would be written.

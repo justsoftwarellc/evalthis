@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
-# banner.sh -- the evalme install banner.
+# banner.sh -- the evalthis install banner.
 #
-# "EVALme" as a chunky pixel wordmark, animated in the style of a 90s Capcom
+# "EVALthis" as a chunky pixel wordmark, animated in the style of a 90s Capcom
 # arcade intro: letters fly in from alternating sides, each one SLAMMING into
 # place with a screen shake, then the finished logo flashes through a color
 # cycle and settles on the brand green.
@@ -38,7 +38,7 @@ banner_supports_unicode() {
 
 banner_is_animatable() {
     [ -t 1 ] || return 1
-    [ -z "${EVALME_NO_ANIM:-}" ] || return 1
+    [ -z "${EVALTHIS_NO_ANIM:-}" ] || return 1
     [ -z "${CI:-}" ] || return 1
     banner_supports_color || return 1
     return 0
@@ -60,20 +60,21 @@ banner_term_cols() {
 
 # ------------------------------------------------------------------ glyphs ---
 #
-# 34x7 pixel grid spelling "EVALme". '#' is an inked cell, '.' is empty.
-# Caps are 7 rows; lowercase 'm' and 'e' are 5 rows tall on the same
-# baseline, so the mixed case reads as one word rather than two sizes.
+# 40x7 pixel grid spelling "EVALthis". '#' is an inked cell, '.' is empty.
+# Caps are 7 rows; lowercase 't' and 'h' reach full height on their
+# ascenders, while 'i' and 's' sit 5 rows tall on the same baseline, so the
+# mixed case reads as one word rather than two sizes.
 
-BANNER_ROW0='#####.#...#..###..#...............'
-BANNER_ROW1='#.....#...#.#...#.#...............'
-BANNER_ROW2='#.....#...#.#...#.#.....####...##.'
-BANNER_ROW3='####..#...#.#####.#.....#.#.#.#..#'
-BANNER_ROW4='#......#.#..#...#.#.....#.#.#.####'
-BANNER_ROW5='#......#.#..#...#.#.....#.#.#.#...'
-BANNER_ROW6='#####...#...#...#.#####.#.#.#..###'
+BANNER_ROW0='#####.#...#..###..#......#...#....#.....'
+BANNER_ROW1='#.....#...#.#...#.#......#...#..........'
+BANNER_ROW2='#.....#...#.#...#.#.....####.###..#..###'
+BANNER_ROW3='####..#...#.#####.#......#...#..#.#.#...'
+BANNER_ROW4='#......#.#..#...#.#......#...#..#.#..##.'
+BANNER_ROW5='#......#.#..#...#.#......#...#..#.#....#'
+BANNER_ROW6='#####...#...#...#.#####...##.#..#.#.###.'
 
 BANNER_H=7
-BANNER_W=34
+BANNER_W=40
 
 banner_row() {
     case "$1" in
@@ -84,9 +85,9 @@ banner_row() {
     esac
 }
 
-# One piece per letter: E V A L m e. Each flies in and slams home in turn.
-BANNER_PIECES='0:4 6:10 12:16 18:22 24:28 30:33'
-BANNER_NPIECES=6
+# One piece per letter: E V A L t h i s. Each flies in and slams home in turn.
+BANNER_PIECES='0:4 6:10 12:16 18:22 24:27 29:32 34:34 36:39'
+BANNER_NPIECES=8
 
 # Brand green -- where every letter lands and the logo finally rests.
 BANNER_LOCK_RGB='88;224;96'

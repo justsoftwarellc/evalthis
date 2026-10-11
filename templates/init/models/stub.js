@@ -1,5 +1,5 @@
 // A placeholder model so `node evals/runner/run.js` works before you have an API key.
-// Replace it, or delete it, once you add a real model (`evalme add model <name>`).
+// Replace it, or delete it, once you add a real model (`evalthis add model <name>`).
 //
 // A model file has exactly two named exports:
 //   model    WHAT is called  (data: id, provider, name, pricing, params)

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build evalme from source and install the `evalme` binary on this machine.
+# Build evalthis from source and install the `evalthis` binary on this machine.
 #
 #   ./install.sh                     install to ~/.local/bin
 #   ./install.sh --prefix /usr/local install to /usr/local/bin (may need sudo)
@@ -26,7 +26,7 @@ while [ $# -gt 0 ]; do
 done
 
 BIN_DIR="${PREFIX}/bin"
-TARGET="${BIN_DIR}/evalme"
+TARGET="${BIN_DIR}/evalthis"
 say() { printf '==> %s\n' "$*"; }
 die() { printf 'error: %s\n' "$*" >&2; exit 1; }
 
@@ -111,7 +111,7 @@ if ! command -v cargo >/dev/null 2>&1; then
 fi
 say "using $(cargo --version)"
 
-# 3. Node.js 20+: runs the evals evalme generates, and the tests that exercise them.
+# 3. Node.js 20+: runs the evals evalthis generates, and the tests that exercise them.
 node_ok() { command -v node >/dev/null 2>&1 && [ "$(node -p 'process.versions.node.split(".")[0]')" -ge 20 ]; }
 if ! node_ok; then
   say "Node.js 20+ is not installed (needed to run the generated evals)."
@@ -134,7 +134,7 @@ cargo build --release --locked
 
 # 5. Install.
 mkdir -p "$BIN_DIR" || die "cannot create ${BIN_DIR} (try a different --prefix, or sudo)"
-install -m 755 target/release/evalme "$TARGET" || die "cannot write ${TARGET} (try a different --prefix, or sudo)"
+install -m 755 target/release/evalthis "$TARGET" || die "cannot write ${TARGET} (try a different --prefix, or sudo)"
 say "installed ${TARGET}"
 
 case ":${PATH}:" in
@@ -143,4 +143,4 @@ case ":${PATH}:" in
      printf '      export PATH="%s:$PATH"\n' "$BIN_DIR" ;;
 esac
 
-say "done. Try: evalme --help"
+say "done. Try: evalthis --help"
