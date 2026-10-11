@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "type": "module",
+  "description": "Marks this folder as ES modules so the evals never change how the rest of your project is loaded."
+}
